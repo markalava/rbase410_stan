@@ -25,6 +25,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/
 
+# For RCurl (from 'https://techoverflow.net/2020/04/22/how-to-fix-rcurl-cannot-find-curl-config-or-checking-for-curl-config-no/')
+RUN apt -y install libcurl4-openssl-dev
+
 # Set up environment
 # Use correct Stan Makevars: https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Mac-or-Linux#prerequisite--c-toolchain-and-configuration
 RUN mkdir -p $HOME/.R \
@@ -58,7 +61,7 @@ RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "stringr"
 
 ## DemoTools (no 'suggests'). 
 
-RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"))'
+RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl", "RCurl"))'
 RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
 RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
 RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
