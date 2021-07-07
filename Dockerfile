@@ -1,6 +1,7 @@
 FROM rocker/r-base:4.1.0
 LABEL maintainer="Mark Wheldon <biostatmark@gmail.com>"
 
+# R is installed in /usr/local/lib with executable in /usr/local/bin
 
 
 ###### BELOW: based on 'https://github.com/andrewheiss/tidyverse-stan/blob/master/3.5.1/Dockerfile'
@@ -47,40 +48,32 @@ RUN mkdir -p $HOME/.R \
         \nsloppiness = include_file_ctime \
         \nhash_dir = false \
         \n" >> $HOME/.ccache/ccache.conf \
-    # Add configuration files for RStudio user
-    && mkdir -p /home/rstudio/.R/ \
-    && echo '\n \
-        \n# Stan stuff \
-        \nCXXFLAGS=-O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function -Wno-macro-redefined \
-        \n' >> /home/rstudio/.R/Makevars \
-    && echo "rstan::rstan_options(auto_write = TRUE)\n" >> /home/rstudio/.Rprofile \
-    && echo "options(mc.cores = parallel::detectCores())\n" >> /home/rstudio/.Rprofile
 
-# Install Stan, rstan, rstanarm, brms, and friends
+# # CRAN dependencies
 
-RUN install2.r --error --deps TRUE rstan loo bayesplot
-RUN Rscript -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
-RUN Rscript -e 'cmdstanr::install_cmdstan()'
-RUN install2.r --error --deps TRUE rstanarm rstantools shinystan brms 
+# RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "Rcpp", "stringr", "testthat", "ggplot2", "scales", "knitr", "rmarkdown", "bookdown", "DiagrammeR", "Rcpp", "RcppParallel", "BH", "RcppEigen", "RcppParallel", "pbapply", "gridExtra", "egg"), dependencies = TRUE)'
 
-# Install cmdstan
+# # ## DemoTools (no 'suggests'). 
 
-RUN cd /opt \
-    && git clone https://github.com/stan-dev/cmdstan.git --recursive \
-    && cd cmdstan \
-    && make build \
-    && export PATH="/opt/cmdstan/bin:$PATH"
+# # RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"), dependencies = TRUE)'
+# # RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
+# # RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
+# # RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
 
-## DemoTools (no 'suggests'). 
+# # # Install Stan, rstan, rstanarm, brms, and friends
 
-RUN install2.r --error ungroup rgl
-RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
-RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
-RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
+# # RUN Rscript -e 'install.packages(c("rstan", "loo", "bayesplot"), dependencies = TRUE)'
+# # RUN Rscript -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
+# # RUN Rscript -e 'cmdstanr::install_cmdstan()'
+# # RUN Rscript -e 'install.packages(c("rstanarm", "rstantools", "shinystan", "brms"), dependencies = TRUE)' 
 
-## Extra packages for this project
+# # # Install cmdstan
 
-RUN install2.r --error --deps TRUE tictoc egg
+# # RUN cd /opt \
+# #     && git clone https://github.com/stan-dev/cmdstan.git --recursive \
+# #     && cd cmdstan \
+# #     && make build \
+# #     && export PATH="/opt/cmdstan/bin:$PATH"
 
 ## Clean up
 
