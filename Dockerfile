@@ -47,18 +47,21 @@ RUN mkdir -p $HOME/.R \
     && echo "max_size = 5.0G \
         \nsloppiness = include_file_ctime \
         \nhash_dir = false \
-        \n" >> $HOME/.ccache/ccache.conf 
+  \n" >> $HOME/.ccache/ccache.conf
+
+
+###### BELOW: Packages for task
 
 # CRAN dependencies
 
 RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "stringr", "testthat", "ggplot2", "scales", "Rcpp", "RcppParallel", "BH", "RcppEigen", "pbapply", "gridExtra", "egg"))'
 
-# # ## DemoTools (no 'suggests'). 
+## DemoTools (no 'suggests'). 
 
-# # RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"))'
-# # RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
-# # RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
-# # RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
+RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"))'
+RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
+RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
+RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
 
 # # # Install Stan, rstan, rstanarm, brms, and friends
 
