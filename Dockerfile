@@ -51,7 +51,7 @@ RUN mkdir -p $HOME/.R \
 
 # CRAN dependencies
 
-RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "Rcpp", "stringr", "testthat", "ggplot2", "scales", "knitr", "rmarkdown", "bookdown", "DiagrammeR", "Rcpp", "RcppParallel", "BH", "RcppEigen", "RcppParallel", "pbapply", "gridExtra", "egg"))'
+RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "Rcpp", "stringr", "testthat", "ggplot2", "scales", "knitr", "rmarkdown", "bookdown", "Rcpp", "RcppParallel", "BH", "RcppEigen", "RcppParallel", "pbapply", "gridExtra", "egg"))'
 
 # # ## DemoTools (no 'suggests'). 
 
