@@ -49,13 +49,13 @@ RUN mkdir -p $HOME/.R \
         \nhash_dir = false \
         \n" >> $HOME/.ccache/ccache.conf 
 
-# # CRAN dependencies
+# CRAN dependencies
 
-# RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "Rcpp", "stringr", "testthat", "ggplot2", "scales", "knitr", "rmarkdown", "bookdown", "DiagrammeR", "Rcpp", "RcppParallel", "BH", "RcppEigen", "RcppParallel", "pbapply", "gridExtra", "egg"), dependencies = TRUE)'
+RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "Rcpp", "stringr", "testthat", "ggplot2", "scales", "knitr", "rmarkdown", "bookdown", "DiagrammeR", "Rcpp", "RcppParallel", "BH", "RcppEigen", "RcppParallel", "pbapply", "gridExtra", "egg"))'
 
 # # ## DemoTools (no 'suggests'). 
 
-# # RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"), dependencies = TRUE)'
+# # RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl"))'
 # # RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
 # # RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
 # # RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
