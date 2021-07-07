@@ -47,7 +47,7 @@ RUN mkdir -p $HOME/.R \
     && echo "max_size = 5.0G \
         \nsloppiness = include_file_ctime \
         \nhash_dir = false \
-        \n" >> $HOME/.ccache/ccache.conf \
+        \n" >> $HOME/.ccache/ccache.conf 
 
 # # CRAN dependencies
 
