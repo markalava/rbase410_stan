@@ -26,7 +26,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/
 
 # For RCurl (from 'https://techoverflow.net/2020/04/22/how-to-fix-rcurl-cannot-find-curl-config-or-checking-for-curl-config-no/')
-RUN apt -y install libcurl4-openssl-dev
+# RUN apt -y install libcurl4-openssl-dev
+
+
+### PROBLEMS:
+
+RUN Rscript -e 'install.packages(c("data.table"))'
+
+RUN Rscript -e 'install.packages(c("RCurl"))'
 
 
 ###### BELOW: Packages for task
