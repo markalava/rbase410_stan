@@ -3,27 +3,53 @@ LABEL maintainer="Mark Wheldon <biostatmark@gmail.com>"
 
 # R is installed in /usr/local/lib with executable in /usr/local/bin
 
-
-###### BELOW: based on 'https://github.com/andrewheiss/tidyverse-stan/blob/master/3.5.1/Dockerfile'
-
-# Install ed, since nloptr needs it to compile
-# Install clang and ccache to speed up Stan installation
-# Install libxt-dev for Cairo 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       apt-utils \
-       nano \
-       curl \
-       ed \
-       libnlopt-dev \
-       clang \
-       ccache \
-       libxt-dev \
-       libv8-dev \
-       build-essential \
-       libgl1-mesa-dev libglu1-mesa-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/
+  && apt-get install -y --no-install-recommends \
+  apt-utils \
+  # --- RStudio from 'https://github.com/rocker-org/rocker-versioned/blob/master/rstudio/3.6.3.Dockerfile'
+  file \
+  git \
+  libapparmor1 \
+  libclang-dev \
+  libcurl4-openssl-dev \
+  libedit2 \
+  libssl-dev \
+  lsb-release \
+  multiarch-support \
+  psmisc \
+  procps \
+  python-setuptools \
+  sudo \
+  wget
+  # --- Tidyverse from 'https://github.com/rocker-org/rocker-versioned/blob/master/tidyverse/3.6.3.Dockerfile'
+  libxml2-dev \
+  libcairo2-dev \
+  libsqlite-dev \
+  libmariadbd-dev \
+  libmariadbclient-dev \
+  libpq-dev \
+  libssh2-1-dev \
+  unixodbc-dev \
+  libsasl2-dev \
+  # --- STAN dependencies based on 'https://github.com/andrewheiss/tidyverse-stan/blob/master/3.5.1/Dockerfile'
+  #   Install ed, since nloptr needs it to compile
+  #   Install clang and ccache to speed up Stan installation
+  #   Install libxt-dev for Cairo        
+  curl \
+  ed \
+  libnlopt-dev \
+  clang \
+  ccache \
+  libxt-dev \
+  libv8-dev \
+  build-essential \
+  libgl1-mesa-dev
+  libglu1-mesa-dev \
+  # --- other utils 
+  nano \
+  # --- Tidy
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/
 
 # For RCurl (from 'https://techoverflow.net/2020/04/22/how-to-fix-rcurl-cannot-find-curl-config-or-checking-for-curl-config-no/')
 # RUN apt -y install libcurl4-openssl-dev
@@ -31,7 +57,7 @@ RUN apt-get update \
 
 ### PROBLEMS:
 
-RUN Rscript -e 'install.packages(c("data.table"))'
+ #RUN Rscript -e 'install.packages(c("data.table"))'
 
 RUN Rscript -e 'install.packages(c("RCurl"))'
 
@@ -40,14 +66,14 @@ RUN Rscript -e 'install.packages(c("RCurl"))'
 
 # CRAN dependencies
 
-RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "stringr", "testthat", "ggplot2", "scales", "Rcpp", "RcppParallel", "BH", "RcppEigen", "pbapply", "gridExtra", "egg"))'
+#RUN Rscript -e 'install.packages(c("dplyr", "tibble", "tidyr", "plyr", "stringr", "testthat", "ggplot2", "scales", "Rcpp", "RcppParallel", "BH", "RcppEigen", "pbapply", "gridExtra", "egg"))'
 
 ## DemoTools (no 'suggests'). 
 
-RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl", "RCurl", "data.table"))'
-RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
-RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
-RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
+# RUN Rscript -e 'install.packages(c("remotes", "ungroup", "rgl", "RCurl", "data.table"))'
+# RUN Rscript -e 'remotes::install_github("josehcms/fertestr")'
+# RUN Rscript -e 'remotes::install_github("timriffe/DemoTools")'
+# RUN Rscript -e 'remotes::install_github("cimentadaj/DDSQLtools")'
 
 # # # Install Stan, rstan, rstanarm, brms, and friends
 
